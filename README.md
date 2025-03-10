@@ -6,7 +6,7 @@ This resume template has been developed with the guidance of coaches at the Univ
 
 # $\color[RGB]{250,100,122} Preview$
 
-|<img width="1604" alt="prev" src="preview.jpg"> |  <img width="1604" alt="prev2" src="preview_2.jpg">|
+|<img width="1604" alt="prev" src="./pictures/preview.jpg"> |  <img width="1604" alt="prev2" src="./pictures/preview_2.jpg">|
 |:-------------------------:|:-------------------------:|
 
 # $\color[RGB]{250,100,122} Contribute$

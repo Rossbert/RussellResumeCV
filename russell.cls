@@ -26,41 +26,41 @@
 %-------------------------------------------------------------------------------
 %                3rd party packages
 %-------------------------------------------------------------------------------
-% make fixed length table
+% Needed to make fixed length table
 \RequirePackage{array}
-% handle list environment
+% Needed to handle list environment
 \RequirePackage{enumitem}
-% handle text alignment
+% Needed to handle text alignment
 \RequirePackage{ragged2e}
-% configure page layout
+% Needed to configure page layout
 \RequirePackage{geometry}
-% make header & footer effeciently
+% Needed to make header & footer effeciently
 \RequirePackage{fancyhdr}
-% manage colors
+% Needed to manage colors
 \RequirePackage{xcolor}
-% use \ifxetex-\else-\fi statement
+% Needed to use \ifxetex-\else-\fi statement
 \RequirePackage{ifxetex}
-% use \if-\then-\else statement
+% Needed to use \if-\then-\else statement
 \RequirePackage{xifthen}
-% use a toolbox of programming tools
+% Needed to use a toolbox of programming tools
 \RequirePackage{etoolbox}
-% change line spacing in specific environment
+% Needed to change line spacing in specific environment
 \RequirePackage{setspace}
-% manage fonts
+% Needed to manage fonts
 \RequirePackage[quiet]{fontspec}
 % To support LaTeX quoting style
 \defaultfontfeatures{Ligatures=TeX}
-% manage math fonts
+% Needed to manage math fonts
 \RequirePackage{unicode-math}
-% use icons from font-awesome
+% Needed to use icons from font-awesome
 \RequirePackage{fontawesome5}
 \RequirePackage{roboto}
 \RequirePackage[default,opentype]{sourcesanspro}
 % Needed for the photo ID
 \RequirePackage[skins]{tcolorbox}
-% deal a paragraphs
+% Needed to deal a paragraphs
 \RequirePackage{parskip}
-% deal hyperlink
+% Needed to deal hyperlink
 \RequirePackage[hidelinks,unicode,pdfpagelabels=false]{hyperref}
 \hypersetup{%
   pdftitle={},
@@ -70,7 +70,16 @@
 }
 % Solves issues Warning: File `cv.out' has changed
 \RequirePackage{bookmark}
-
+% To include physical units
+\RequirePackage{siunitx}
+\sisetup{%
+  mode = text,
+  reset-text-family = false, % Mantains font of original text
+  reset-text-series = false, % Mantains weight of original text (bold medium and light) 
+  reset-text-shape = false % Mantains shape of original text (upstraight, inclined)
+}
+% To include scalebox for symbols
+\RequirePackage{graphicx}
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
@@ -343,6 +352,7 @@
 \newcommand*{\recipient}[2]{\def\@recipientname{#1}\def\@recipientaddress{#2}}
 \newcommand*{\recipientname}[1]{\def\@recipientname{#1}}
 \newcommand*{\recipientaddress}[1]{\def\@recipientaddress{#1}}
+\newcommand*{\recipientcity}[1]{\def\@recipientcity{#1}}
 
 % Defines the title for letter (cover letter only, optional)
 % Usage: \lettertitle{<title>}
@@ -382,7 +392,7 @@
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 \newcommand{\acvHeaderAfterSocialSkip}{6mm}
-\newcommand{\acvHeaderAfterQuoteSkip}{5mm}
+\newcommand{\acvHeaderAfterQuoteSkip}{2mm} %original 5mm
 
 % Others
 \newcommand{\acvSectionTopSkip}{3mm}
@@ -410,9 +420,15 @@
 % Define a header for CV
 % Usage: \makecvheader
 \newcommand*{\makecvheader}[1][C]{%
-  \newcommand*{\drawphoto}{%
+  %-------------------------------------------------------------------------------
+  % Commands for photo shape
+  %-------------------------------------------------------------------------------
+  % providecommand is effective when defining multiple Headers because it avoids redefinitions
+  % \newcommand*{\drawphoto}{% Provide is effective when defining multiple Headers
+  \providecommand*{\drawphoto}{%
     \ifthenelse{\isundefined{\@photo}}{}{%
-      \newlength{\photodim}
+      % \newlength{\photodim}
+      \ifthenelse{\isundefined{\photodim}}{\newlength{\photodim}}{}
       \ifthenelse{\equal{\@photoshape}{circle}}%
         {\setlength{\photodim}{1.3cm}}%
         {\setlength{\photodim}{1.8cm}}%
@@ -424,8 +440,13 @@
       \end{tikzpicture}
     }%
   }
-  \newlength{\headertextwidth}
-  \newlength{\headerphotowidth}
+  %-------------------------------------------------------------------------------
+  % Variables for length of picture and text
+  %-------------------------------------------------------------------------------
+  % \newlength{\headertextwidth}
+  \ifthenelse{\isundefined{\headertextwidth}}{\newlength{\headertextwidth}}{}
+  % \newlength{\headerphotowidth}
+  \ifthenelse{\isundefined{\headerphotowidth}}{\newlength{\headerphotowidth}}{}
   \ifthenelse{\isundefined{\@photo}}{
     \setlength{\headertextwidth}{\textwidth}
     \setlength{\headerphotowidth}{0cm}
@@ -433,15 +454,37 @@
     \setlength{\headertextwidth}{0.76\textwidth}
     \setlength{\headerphotowidth}{0.24\textwidth}
   }%
-  \begin{minipage}[c]{\headerphotowidth}%
-    \ifthenelse{\equal{\@photoalign}{left}}{\raggedright\drawphoto}{}
-  \end{minipage}
+  %-------------------------------------------------------------------------------
+  % Mini page layout if a photo was defined
+  %-------------------------------------------------------------------------------
+  % Condition avoids creating minipages with length 0cm when the photo alignment is left
+  \ifthenelse{\isundefined{\@photo}}
+    {}%
+    {%
+      \ifthenelse{\equal{\@photoalign}{left}}
+        {%
+          \begin{minipage}[c]{\headerphotowidth}
+            \raggedright\drawphoto
+          \end{minipage}%
+        }%
+        {}%
+    }%
+  % \begin{minipage}[c]{\headerphotowidth}%
+  %   \ifthenelse{\equal{\@photoalign}{left}}{\raggedright\drawphoto}{}
+  % \end{minipage}
+  %-------------------------------------------------------------------------------
+  % Main text
+  %-------------------------------------------------------------------------------
   \begin{minipage}[c]{\headertextwidth}
+    % Name alignment
     \ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
     \headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
-    \\[\acvHeaderAfterNameSkip]%
+    \\[\acvHeaderAfterNameSkip]% Calling function \\[] with optional argument to specify the space
+    % Current position description
     \ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
+    % Address description
     \ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
+    % Social media description
     \headersocialstyle{%
       \newbool{isstart}%
       \setbool{isstart}{true}%
@@ -567,13 +610,26 @@
           \@extrainfo%
         }%
     } \\[\acvHeaderAfterSocialSkip]%
+    % Quote description
     \ifthenelse{\isundefined{\@quote}}%
       {}%
       {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
   \end{minipage}%
-  \begin{minipage}[c]{\headerphotowidth}%
-    \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
-  \end{minipage}
+  % Condition avoids creating minipages with length 0cm when the photo alignment is right
+  \ifthenelse{\isundefined{\@photo}}
+    {}%
+    {%
+      \ifthenelse{\equal{\@photoalign}{right}}
+        {%
+          \begin{minipage}[c]{\headerphotowidth}%
+            \raggedleft\drawphoto
+          \end{minipage}%
+        }%
+        {}%
+    }%
+  % \begin{minipage}[c]{\headerphotowidth}%
+  %   \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
+  % \end{minipage}
 }
 
 % Define a footer for CV
@@ -622,6 +678,7 @@
 }
 % Define an entry of cv information
 % Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
+% Usage: \cventry{<degree>}{<institution>}{<location>}{<date>}{<description>}
 \newcommand*{\cventry}[5]{%
   \vspace{-2.0mm}
   \setlength\tabcolsep{0pt}
@@ -644,16 +701,15 @@
 % Define a subentry of cv information
 % Usage: \cvsubentry{<position>}{<title>}{<date>}{<description>}
 \newcommand*{\cvsubentry}[4]{%
+  \vspace{-2.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
     \setlength\leftskip{0.2cm}
-    \subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
-      {\subentrydatestyle{#3}}{}
-    \ifthenelse{\equal{#1}{}}
-      {}
-      {\subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
-    \ifthenelse{\equal{#4}{}}
+    \subentrytitlestyle{#2} & \ifempty{#1}
+      {\subentrydatestyle{#3}\\}
+      {\\ \subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
+    \ifempty{#4}
       {}
       {\multicolumn{2}{L{17.0cm}}{\subdescriptionstyle{#4}} \\}
   \end{tabular*}
@@ -665,16 +721,23 @@
   \vspace{-2mm}
   \begin{center}
     \setlength\tabcolsep{0pt}
-    \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+    \setlength{\extrarowheight}{3pt}
+    \begin{spacing}{0.8} % Apply line spacing adjustment globally
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
 }{%
-    \end{tabular*}
+      \end{tabular*}
+    \end{spacing}
   \end{center}
+  \vspace{-2mm}
 }
 % Define a line of cv information(honor, award or something else)
-% Usage: \cvhonor{<position>}{<title>}{<location>}{<date>}
-\newcommand*{\cvhonor}[4]{%
-  \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} & \honorlocationstyle{#3} \\
+% Usage: \cvhonor{<position>}{<title>}{<location>}{<date>}{<link>}
+\newcommand*{\cvhonor}[5]{%
+  \honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2}%
+  \ifempty{#5}{}{%
+  % \href{https://#5}{\faExternalLink*\acvHeaderIconSep\honortitlestyle{#5}}}% If you want to display the link text
+  \ \href{https://#5}{\scalebox{0.8}{\faExternalLink*}\acvHeaderIconSep\honortitlestyle{(Click to view)}}}%
+  & \honorlocationstyle{#3} \\%
 }
 
 % Define an environment for cvskill
@@ -683,11 +746,14 @@
   \vspace{-2.0mm}
   \begin{center}
     \setlength\tabcolsep{1ex}
-    \setlength{\extrarowheight}{0pt}
-    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
+    \setlength{\extrarowheight}{4pt}
+    \begin{spacing}{0.8} % Apply line spacing adjustment globally
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.865}}}
 }{%
-    \end{tabular*}
+      \end{tabular*}
+    \end{spacing}
   \end{center}
+  \vspace{-4.0mm}
 }
 % Define a line of cv information(skill)
 % Usage: \cvskill{<type>}{<skillset>}
@@ -712,9 +778,29 @@
 }{%
   \end{itemize}
   \end{justify}
-  \vspace{-4.0mm}
+  \vspace{0.0mm}
 }
 
+% Define an environment for cvrecommendation
+\newenvironment{cvreferences}{%
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-2.0mm}
+  \begin{center}
+    \setlength\tabcolsep{0pt}
+    \setlength{\extrarowheight}{0pt}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l R{\textwidth * \real{0.4}}}
+}{%
+    \end{tabular*}
+  \end{center}
+}
+% Define a line of cv information(recommendation, reference)
+% Usage: \cvreference{<name>}{<type>}{<email>}{<description>}
+\newcommand*{\cvreference}[5]{%
+  % \vspace{-2.0mm}
+  \entrytitlestyle{#1}&\entrylocationstyle{#5}\\%
+  \entrypositionstyle{#2}&\href{mailto:#3}{\faEnvelope\acvHeaderIconSep\entrypositionstyle{#3}}\\%
+  \multicolumn{2}{L{\textwidth}}{\hspace*{2mm}\descriptionstyle{#4}}\\
+}
 
 %-------------------------------------------------------------------------------
 %                Commands for elements of Cover Letter
@@ -739,33 +825,41 @@
 % Define a title of the cover letter
 % Usage: \makelettertitle
 \newcommand*{\makelettertitle}{%
+  % \break
   \vspace{8.4mm}
+  % \break
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
     \recipienttitlestyle{\@recipientname} & \letterdatestyle{\@letterdate}
   \end{tabular*}
   \begin{singlespace}
-    \recipientaddressstyle{\@recipientaddress} \\\\
+    \recipientaddressstyle{%
+      \vspace{-2mm}
+      \@recipientaddress\hfill\break%
+      \@recipientcity%
+      }
   \end{singlespace}
+  \par
   \ifthenelse{\isundefined{\@lettertitle}}
     {}
-    {\lettertitlestyle{\@lettertitle} \\}
-  \lettertextstyle{\@letteropening}
+    {\vspace{5.0mm}\lettertitlestyle{\@lettertitle}\par}%
+    \vspace{5.0mm}\par
+    \lettertextstyle{\@letteropening}
+    \vspace{5.0mm}\par
 }
 
 % Define a closing of the cover letter
 % Usage: \makeletterclosing
 \newcommand*{\makeletterclosing}{%
-  \vspace{3.4mm}
-  \lettertextstyle{\@letterclosing} \\\\
+  \vspace{3.5mm}
+  \lettertextstyle{\@letterclosing}\par\vspace{3.5mm}
   \letternamestyle{\@firstname\ \@lastname}
   \ifthenelse{\isundefined{\@letterenclosure}}
-    {\\}
+    {\par}%
     {%
-      \\\\\\
-      \letterenclosurestyle{\@letterenclname: \@letterenclosure} \\
-    }
+      \par\vspace{7.0mm}\letterenclosurestyle{\@letterenclname:\hfill\break\@letterenclosure}%
+    }%
 }
 
 
@@ -812,7 +906,7 @@
    \newblock%
    {%
      \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
-     \usebibmacro{journal}%
+     \usebibmacro{journal+issuetitle}%
      \setunit{\space}%
      \printfield{pages}%
      \newunit%
