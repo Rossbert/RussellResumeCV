@@ -69,6 +69,8 @@
 \begin{document}
 %------------------------------ Begin Resume ------------------------------
 %--------------------------------------------------------------------------------
+% % Debugging: Show detailed output for spacing and layout
+% \showoutput
 
 % Print the header with above personal informations
 % Give optional argument to change alignment(C: center, L: left, R: right)
@@ -76,7 +78,9 @@
 
 % Print the footer with 3 arguments(<left>, <center>, <right>)
 % Leave any of these blank if they are not needed
-\makecvfooter{\today}{}{\thepage}
+\makecvfooter{\today}
+  {}
+  {\thepage}
 
 %-------------------------------------------------------------------------------
 %	CV/RESUME CONTENT
@@ -101,13 +105,14 @@
 \recipientname{ArianeGroup Bremen Hiring Manager}
 \recipientaddress{Airbus-Allee 1}
 \recipientcity{28199 Bremen}
-\lettertitle{Reference: Application for Auslegung eines mechanisch gepumpten Kühlkreislaufes für zukünftige Raketen-Oberstufen}
+\lettertitle{Reference: Application for ``Berechnungsingenieur Luft- und Raumfahrt''}
 \letteropening{Dear Hiring Manager,}
 \letterclosing{Sincerely,}
 \letterenclname % Accepts optional argument to change the name
-\letterenclosure[Attachement]{Resume}
+\letterenclosure[Attachment]{Resume}
 
-\makecvheader
+% Create the header for the letter
+\makecvheader[]
 % Print the letter title
 % Prints recipient information and the letter title reference
 % Prints the letter openning
