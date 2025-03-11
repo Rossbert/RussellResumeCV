@@ -1,6 +1,6 @@
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 % CONFIGURATIONS
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 % A4 paper size by default, use 'letterpaper' for US letter
 \documentclass[11pt, a4paper]{russell}
 
@@ -31,10 +31,10 @@
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 
 
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 %	PERSONAL INFORMATION
 %	Comment any of the lines below if they are not required
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 % Available options: circle|rectangle,edge/noedge,left/right
 % \photo[rectangle,noedge,right]{./photo/photo.jpg}
 \name{Sergio Alejandro}{Rosales Vargas}
@@ -60,15 +60,15 @@
 \quote{``Aim to the stars.''}
 
 
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 %	BIBLIOGRAPHY
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 \addbibresource{cv/references.bib}
 
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 \begin{document}
-%------------------------------ Begin Resume ------------------------------
-%--------------------------------------------------------------------------------
+%--------------------------- Begin Resume ----------------------------
+%---------------------------------------------------------------------
 % % Debugging: Show detailed output for spacing and layout
 % \showoutput
 
@@ -82,10 +82,10 @@
   {}
   {\thepage}
 
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 %	CV/RESUME CONTENT
 %	Each section is imported separately, open each file in turn to modify content
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 \input{cv/summary.tex}
 \input{cv/education.tex}
 \input{cv/experience.tex}
@@ -97,13 +97,18 @@
 \input{cv/skills.tex}
 \input{cv/languages.tex}
 % \input{cv/interests.tex}
+%---------------------------- End Resume -----------------------------
+%---------------------------------------------------------------------
 
-\newpage
-%------------------------------ Begin Cover Letter ------------------------------
-%--------------------------------------------------------------------------------
+% This line creates a new page, this configuration creates a cover
+% letter in the next page 
+% \newpage
+
+%------------------------ Begin Cover Letter--------------------------
+%---------------------------------------------------------------------
 \letterdate{\today}
-\recipientname{ArianeGroup Bremen Hiring Manager}
-\recipientaddress{Airbus-Allee 1}
+\recipientname{SII Germany Hiring Manager}
+\recipientaddress{Otto-Lilienthal-Stra\sse 27}
 \recipientcity{28199 Bremen}
 \lettertitle{Reference: Application for ``Berechnungsingenieur Luft- und Raumfahrt''}
 \letteropening{Dear Hiring Manager,}
@@ -112,18 +117,21 @@
 \letterenclosure[Attachment]{Resume}
 
 % Create the header for the letter
-\makecvheader[]
+% \makecvheader[]
+
 % Print the letter title
 % Prints recipient information and the letter title reference
 % Prints the letter openning
-\makelettertitle
+% \makelettertitle
 
-\input{cv/cvletter.tex} % Done
+% \input{cv/cvletter.tex}
 
 % Prints closing and enclosure
-\makeletterclosing
+% \makeletterclosing
+%------------------------- End Cover Letter---------------------------
+%---------------------------------------------------------------------
 
 \vspace*{\fill}
 % \centering{\textbf{References available upon request.}}
-%-------------------------------------------------------------------------------
+%---------------------------------------------------------------------
 \end{document}
