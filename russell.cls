@@ -690,7 +690,7 @@
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
     \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
   \end{tabular*}
-  \vspace{0.0mm}%
+  \vspace{3.0mm}%
 }
 
 % Define an environment for cvsubentry
@@ -779,7 +779,7 @@
 }{%
   \end{itemize}
   \end{justify}
-  \vspace{0.0mm}
+  \vspace{-2.0mm}
 }
 
 % Define an environment for cvrecommendation
