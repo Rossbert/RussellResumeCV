@@ -1,0 +1,98 @@
+### TeX ###
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.loc
+
+## Intermediate documents:
+*.dvi
+*-converted-to.*
+*.ps
+*.xdv
+*.svg
+
+## BibLaTeX auxiliary files: (bibtex/biblatex/biber)
+*.bbl*
+*.brf
+*.bcf*
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Temporary files
+*.tmp
+*.bak
+*.old
+*.backup
+
+### Editor ###
+## Vim & Emacs temp files:
+.*sw[op]
+*~
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## Build tool directories for auxiliary files
+# latexrun
+latex.out/
+
+## Auxiliary and intermediate files from other packages:
+# algorithms
+*.alg
+*.loa
+
+## Othe auxiliary files
+*.dpth
+*.md5
+*.spl
+*.soc
+
+# Glossaries
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.ist
+*.xdy
+
+## In case of latexmk
+build/
+.latexmkrc
+
+### Mac OS X ###
+## Mac OS X metadata files:
+*.DS_Store
+
+### VSCode configuration folder ###
+## VSCode configuration files:
+.vscode
+
+### VSCode configuration folder ###
+## VSCode configuration files:
+.github
+
+### External files ###
+## Word
+*.docx
+*.doc

@@ -2,13 +2,13 @@
 % CONFIGURATIONS
 %---------------------------------------------------------------------
 % A4 paper size by default, use 'letterpaper' for US letter
-\documentclass[11pt, a4paper]{russell}
+\documentclass[11pt, a4paper]{../common/russell}
 
 % Configure page margins with geometry
 \geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
 
 % Specify the location of the included fonts
-\fontdir[fonts/]
+\fontdir[../common/fonts/]
 
 % Color for highlights
 % russell Colors: russell-emerald, russell-skyblue, russell-red, russell-pink, russell-orange
@@ -72,45 +72,13 @@
 % % Debugging: Show detailed output for spacing and layout
 % \showoutput
 
-% Print the header with above personal informations
-% Give optional argument to change alignment(C: center, L: left, R: right)
-\makecvheader[]
-
-% Print the footer with 3 arguments(<left>, <center>, <right>)
-% Leave any of these blank if they are not needed
-\makecvfooter{\today}
-  {}
-  {\thepage}
-
-%---------------------------------------------------------------------
-%	CV/RESUME CONTENT
-%	Each section is imported separately, open each file in turn to modify content
-%---------------------------------------------------------------------
-\input{cv/summary.tex}
-\input{cv/education.tex}
-\input{cv/experience.tex}
-\input{cv/publications.tex}
-\input{cv/volunteering.tex}
-\input{cv/achievements.tex}
-\input{cv/projects.tex}
-% \input{cv/references.tex}
-\input{cv/skills.tex}
-\input{cv/languages.tex}
-% \input{cv/interests.tex}
-%---------------------------- End Resume -----------------------------
-%---------------------------------------------------------------------
-
-% This line creates a new page, this configuration creates a cover
-% letter in the next page 
-\newpage
-
 %------------------------ Begin Cover Letter--------------------------
 %---------------------------------------------------------------------
 \letterdate{\today}
 \recipientname{POLARIS Raumflugzeuge GmbH Hiring Manager}
 \recipientaddress{Zum Panrepel 11}
 \recipientcity{28307 Bremen}
-\lettertitle{Reference: Application for ``GNC Engineer''}
+\lettertitle{Reference: Application for ``Junior Systems Engineer Aerial Refueling''}
 \letteropening{Dear Hiring Manager,}
 \letterclosing{Sincerely,}
 \letterenclname % Accepts optional argument to change the name
