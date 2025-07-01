@@ -7,70 +7,12 @@
 % Configure page margins with geometry
 \geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
 
-% Specify the location of the included fonts
-\fontdir[../common/fonts/]
-
-% Color for highlights
-% russell Colors: russell-emerald, russell-skyblue, russell-red, russell-pink, russell-orange
-%                 russell-nephritis, russell-concrete, russell-darknight, russell-purple
-\colorlet{russell}{russell-red}
-% Uncomment if you would like to specify your own color
-% \definecolor{russell}{HTML}{CA63A8}
-
-% Colors for text
-% Uncomment if you would like to specify your own color
-% \definecolor{darktext}{HTML}{414141}
-% \definecolor{text}{HTML}{333333}
-% \definecolor{graytext}{HTML}{5D5D5D}
-% \definecolor{lighttext}{HTML}{999999}
-
-% Set false if you don't want to highlight section with russell color
-\setbool{acvSectionColorHighlight}{true}
-
-% If you would like to change the social information separator from a pipe (|) to something else
-\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
-
-
-%---------------------------------------------------------------------
-%	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
-%---------------------------------------------------------------------
-% Available options: circle|rectangle,edge/noedge,left/right
-% \photo[rectangle,noedge,right]{./photo/photo.jpg}
-\name{Sergio Alejandro}{Rosales Vargas}
-\position{M.Sc. Space Engineering}
-\address{Vagtstra\ss e 43/44, 28203 Bremen}
-\mobile{+49-163-8917040}
-\email{rosalesergius@gmail.com}
-% \dateofbirth{August 15th, 1994}
-% \homepage{www.posquit0.com} 
-% \github{github.com/themagicalmammal}
-\linkedin{sergio-alejandro-rosales-vargas}
-% \gitlab{gitlab-id}
-% \stackoverflow{SO-id}{SO-name}
-% \twitter{@twit}
-% \skype{skype-id}
-% \reddit{reddit-id}
-% \medium{madium-id}
-% \kaggle{kaggle-id}
-% \googlescholar{googlescholar-id}{name-to-display}
-%% \firstname and \lastname will be used
-% \googlescholar{googlescholar-id}{}
-% \extrainfo{extra information}
-% \quote{``Aim to the stars.''}
-
-
-%---------------------------------------------------------------------
-%	BIBLIOGRAPHY
-%---------------------------------------------------------------------
-\addbibresource{cv/references.bib}
+% Common user information and configuration for cover letter and
+% resume. Quote is excluded for its application only in the CV
+\input{../common/preamble.tex}
 
 %---------------------------------------------------------------------
 \begin{document}
-%--------------------------- Begin Resume ----------------------------
-%---------------------------------------------------------------------
-% % Debugging: Show detailed output for spacing and layout
-% \showoutput
 
 %------------------------ Begin Cover Letter--------------------------
 %---------------------------------------------------------------------
