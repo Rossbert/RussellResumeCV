@@ -80,6 +80,8 @@
 }
 % To include scalebox for symbols
 \RequirePackage{graphicx}
+% To deal with orphans
+\RequirePackage{needspace}
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
@@ -392,7 +394,7 @@
 \newcommand{\acvHeaderIconSep}{\space}
 \newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 \newcommand{\acvHeaderAfterSocialSkip}{6mm}
-\newcommand{\acvHeaderAfterQuoteSkip}{2mm} %original 5mm
+\newcommand{\acvHeaderAfterQuoteSkip}{1mm} %original 5mm
 
 % Others
 \newcommand{\acvSectionTopSkip}{3mm}
@@ -644,11 +646,12 @@
 % Define a section for CV
 % Usage: \cvsection{<section-title>}
 \newcommand{\cvsection}[1]{%
-  \vspace{\acvSectionTopSkip}
-  \vspace{\acvSectionTopSkip}
+%   \vspace{\acvSectionTopSkip}
+  \vspace{0.5em}
   \sectionstyle{#1}
   \phantomsection
   \color{sectiondivider}\vhrulefill{0.9pt}
+  \vspace{0.5em}
 }
 
 % Define a subsection for CV
@@ -662,17 +665,17 @@
 
 % Define a paragraph for CV
 \newenvironment{cvparagraph}{%
-  \vspace{\acvSectionContentTopSkip}
-  \vspace{-3mm}
+%   \vspace{\acvSectionContentTopSkip}
+%   \vspace{-3mm}
   \paragraphstyle
 }{%
   \par
-  \vspace{2mm}
+%   \vspace{2mm}
 }
 
 % Define an environment for cventry
 \newenvironment{cventries}{%
-  \vspace{\acvSectionContentTopSkip}
+%   \vspace{\acvSectionContentTopSkip}
   \begin{center}
 }{%
   \end{center}
@@ -684,12 +687,18 @@
 %   \vspace{-1.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
+  % \renewcommand{\arraystretch}{0.5}%This Allows you to modify the row height of the tabular environment
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
     \ifempty{#2#3}
       {\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
       {\entrytitlestyle{#2} & \entrylocationstyle{#3} \\
       \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
-    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
+    \multicolumn{2}{L{\textwidth}}{
+      \begin{minipage}[t]{\textwidth}%Minipage is a must to delete the added vertical blank line in vertical mode when the following text is just a list
+        \vspace*{-0.475\baselineskip}%This deletes the vertical glue space that LaTeX adds to padd the environment
+        \descriptionstyle{#5}
+      \end{minipage}
+    }
   \end{tabular*}
 %   \vspace{3.0mm}%
 }
@@ -725,7 +734,7 @@
     \setlength\tabcolsep{0pt}
     \setlength{\extrarowheight}{3pt}
     \begin{spacing}{0.8} % Apply line spacing adjustment globally
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{2.5cm} L{\textwidth - 6.0cm} R{3.5cm}}
 }{%
       \end{tabular*}
     \end{spacing}
@@ -741,6 +750,31 @@
   \ \href{https://#5}{\scalebox{0.8}{\faExternalLink*}\acvHeaderIconSep\honortitlestyle{(Click to view)}}}%
   & \honorlocationstyle{#3} \\%
 }
+
+% Define an environment for cvcertificate
+\newenvironment{cvcertificates}{%
+  % \vspace{\acvSectionContentTopSkip}
+  % \vspace{-2mm}
+  \begin{center}
+    \setlength\tabcolsep{0pt}
+    \setlength{\extrarowheight}{3pt}
+    \begin{spacing}{0.8} % Apply line spacing adjustment globally
+      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 1.5cm}}
+}{%
+      \end{tabular*}
+    \end{spacing}
+  \end{center}
+  \vspace{-2mm}
+}
+% Define a line of cv information(honor, award or something else)
+% Usage: \cvcertificate{<position>}{<title>}{<date>}{<link>}
+\newcommand*{\cvcertificate}[4]{%
+  \honordatestyle{#3} & \honorpositionstyle{#1}, \honortitlestyle{#2}%
+  \ifempty{#4}{}{%
+  \ \href{https://#4}{\scalebox{0.8}{\faExternalLink*}\acvHeaderIconSep\honortitlestyle{(Click)}}}
+  \\%
+}
+
 
 % Define an environment for cvskill
 \newenvironment{cvskills}{%
@@ -772,7 +806,7 @@
 
 % Define an environment for cvitems(for cventry)
 \newenvironment{cvitems}{%
-  \vspace{0.0mm}
+%   \vspace{-4.0mm}
   \begin{justify}
   \begin{itemize}[leftmargin=2ex, nosep, noitemsep, partopsep=0pt]
     \setlength{\parskip}{0pt}
@@ -780,7 +814,7 @@
 }{%
   \end{itemize}
   \end{justify}
-  \vspace{0.0mm}
+%   \vspace{-2.0mm}
 }
 
 % Define an environment for cvrecommendation
