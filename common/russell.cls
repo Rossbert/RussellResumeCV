@@ -82,6 +82,8 @@
 \RequirePackage{graphicx}
 % To deal with orphans
 \RequirePackage{needspace}
+% To change the language in german and english
+\RequirePackage[main=english,spanish,ngerman]{babel}
 %-------------------------------------------------------------------------------
 %                Configuration for directory locations
 %-------------------------------------------------------------------------------
